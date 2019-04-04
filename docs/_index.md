@@ -1,12 +1,12 @@
 # Septnn Doc Install
 
-## Clone
+- **Clone**
 
 ```sh 
-git clone https://github.com/sepntt/PHPKnowledgeTree.git
+git clone https://github.com/sepntt/SeptnnDoc.git
 ```
 
-## Nginx
+- **Nginx**
 
 ```nginx
 server {
@@ -18,7 +18,7 @@ server {
     }
 
     location ~ \.php($|/) {
-        root /xxx/PHPKnowledgeTree/;
+        root /xxx/SeptnnDoc/;
         if ($fastcgi_script_name ~* "^/upload.*/.+"){
             return 404;
         }
@@ -37,7 +37,8 @@ server {
 }
 ```
 
-## 访问
-
-> 动态访问:`http://xxx.com`
-> 静态访问:先生成静态文件需要执行`./bin/daux generate`,然后访问`http://xxx.com/static`
+- **访问**
+```sh
+动态访问 ： `http://xxx.com`  
+静态访问 ： 生成静态文件需要执行`./bin/daux generate`，然后访问`http://xxx.com/static`
+```
