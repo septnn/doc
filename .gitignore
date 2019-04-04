@@ -1,0 +1,12 @@
+##ignore this file##
+#.gitignore
+.project
+.settings
+.buildpath
+.idea/*
+deployment*
+.DS_Store
+_book/*
+node_modules/*
+static/*
+package-lock.json
