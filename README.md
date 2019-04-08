@@ -1,6 +1,6 @@
 # Septnn Doc
 
-## 个人相关的文档，基于(DAUX)[http://daux.io]
+## 个人相关的文档，基于[DAUX](http://daux.io)
 
 ## 安装
 
