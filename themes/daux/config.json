@@ -22,9 +22,9 @@
             "favicon": "<theme_url>img/favicon-red.png",
             "css": ["<theme_url>css/theme-red.min.css"]
         },
-        "jwd": {
+        "github": {
             "favicon": "<theme_url>img/favicon-navy.png",
-            "css": ["<theme_url>css/theme-jwd.css"]
+            "css": ["<theme_url>css/theme-github.css"]
         }
     }
 }
