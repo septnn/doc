@@ -1,12 +1,16 @@
-# Septnn Doc Install
+# Septnn Doc
 
-- **Clone**
+## 个人相关的文档，基于(DAUX)[http://daux.io]
+
+## 安装
+
+- **克隆**
 
 ```sh 
 git clone https://github.com/sepntt/SeptnnDoc.git
 ```
 
-- **Nginx**
+- **Nginx配置**
 
 ```nginx
 server {
