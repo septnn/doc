@@ -10,3 +10,4 @@ _book/*
 node_modules/*
 static/*
 package-lock.json
+.vscode/

@@ -59,7 +59,8 @@
         "google_analytics": false,
         "piwik_analytics": false,
         "piwik_analytics_id": "0",
-        "repo" : false
+        "repo" : false,
+        "edit_on_github": "https://github.com/sepntt/SeptnnDoc/tree/master/docs"
     },
     "confluence": {
         "prefix": "",
