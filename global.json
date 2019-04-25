@@ -2,10 +2,10 @@
     "docs_directory": "docs",
     "themes_directory": "themes",
     "title": "Septnn Doc",
-    "tagline": "",
+    "tagline": "I am Septnn",
     "author": "septnn",
-    "image": "",
-    "languages": {},
+    "image": "docs/logo.png",
+    "languages": {"en": "English", "zh": "简体中文"},
     "cache": false,
     "format": "html",
     "processor": "",
@@ -33,7 +33,7 @@
             "Link_next": "下一个",
             "Edit_on": ":name: 编辑",
             "View_on_github": "在GitHub上查看",
-            "View_documentation": "查看文档",
+            "View_documentation": "Septnn Doc",
             "Table_of_contents": "目录"
         }
     },
