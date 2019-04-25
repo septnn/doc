@@ -2,7 +2,7 @@
 
 ## 描述
 
-- [我的简历](简历.md)
+- [我的简历](/1_简历/简历.md)
 - todo list
     - [x] 个人简历，markdown格式
     - [x] 生成html脚本，调用[github-api](https://developer.github.com/v3/markdown/)
@@ -16,9 +16,8 @@
     # cd ./简历/
     ```
 3. 编辑简历.md，根据github md语法。
-4. 修改./tools/tohtml.php内token成员变量
+4. 修改./tohtml.php内token成员变量
     ``` 
-    # cd ../tools/
     # vi tohtml.php
     ```
     ```php

@@ -30,10 +30,10 @@ yiisoft/yii2-swiftmailer       2.1.0   The SwiftMailer integration for the Yii f
 
 ### 克隆框架
 
-> 可以放到任意位置
+> 可以放到任意位置，如果是开发机，不需要克隆
 
 ```sh
-git clone
+git clone http://git.juewei.com/projects/MPOS/repos/yii2_base/browse
 ```
 
 ### 克隆项目DEMO
@@ -41,7 +41,7 @@ git clone
 > 可以放到任意位置
 
 ```sh
-git clone
+git clone http://git.juewei.com/projects/MPOS/repos/yii2_base/browse/demo app
 ```
 
 ### 修改项目配置文件
@@ -56,11 +56,7 @@ defined('YII_FRAME') or define('YII_FRAME', '/home/dawei/www/frame');
 
 ```nginx
 server {
-    charset utf-8;
-    #client_max_body_size 128M;
-
-    listen 31011; ## listen for ipv4
-    #listen [::]:80 default_server ipv6only=on; ## listen for ipv6
+    listen 31011;
 
     server_name frame.dev.juewei.com;
     root        /home/dawei/www/frame/web;
@@ -72,17 +68,6 @@ server {
     location / {
         # Redirect everything that isn't a real file to index.php
         try_files $uri $uri/ /index.php$is_args$args;
-    }
-
-    # uncomment to avoid processing of calls to non-existing static files by Yii
-    #location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
-    #    try_files $uri =404;
-    #}
-    #error_page 404 /404.html;
-
-    # deny accessing php files for the /assets directory
-    location ~ ^/assets/.*\.php$ {
-        deny all;
     }
 
     location ~ \.php$ {
@@ -106,8 +91,17 @@ server {
 #### 项目目录说明
 
 - config                    配置文件
+  - dev                     开发机配置文件夹
+    - db.php                数据库配置
+    - redis.php             redis配置
+    - log.php               日志配置
+  - app.php                 项目公共配置
+  - web.php                 web配置
+  - console.php             脚本配置
+  - params.php              其它配置
 - controllers               控制器
 - models                    模型层
-- runtime                   
-- views
-- web
+- runtime                   执行时文件
+- views                     模板层
+- web                       web入口
+- yii                       脚本入口 
