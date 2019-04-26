@@ -10,7 +10,7 @@ $author = [
 	'Authorization: Basic '.base64_encode($username.':'.$token),
 ];
 $json = json_encode([
-	'text' => file_get_contents('../1_简历/简历.md'),
+	'text' => file_get_contents('简历.md'),
 	'mode' => 'markdown',
 	'context' => 'github/gollum',
 ]);

@@ -17,7 +17,7 @@
         "toggle_code": false,
         "date_modified": true,
         "float": false,
-        "inherit_index": true,
+        "inherit_index": false,
 
         "repo": false,
         "edit_on_github": "https://github.com/sepntt/SeptnnDoc/tree/master/docs",
