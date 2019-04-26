@@ -1,8 +1,8 @@
 node_modules
 .DS_Store
 .idea
-/sftp-config.json
+sftp-config.json
 static
 .vscode
 
-/vendor/
+vendor/
