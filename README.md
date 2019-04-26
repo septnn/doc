@@ -10,14 +10,20 @@
 git clone https://github.com/sepntt/SeptnnDoc.git
 ```
 
-2. **WEB服务**
+2. **Composer**
+
+```sh
+composer update
+```
+
+4. **WEB服务**
 
 ```sh
 cd septnndoc
 php -S 127.0.0.1:81
 ```
 
-3. **访问**
+5. **访问**
 ```sh
 动态访问 ： `http://127.0.0.1:81`  
 静态访问 ： 生成静态文件需要执行`./bin/daux generate`，然后访问`http://127.0.0.1:81/static`
