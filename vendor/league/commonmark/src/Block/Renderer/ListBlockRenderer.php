@@ -41,7 +41,7 @@ class ListBlockRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         if ($listData->start !== null && $listData->start !== 1) {

@@ -1,13 +1,8 @@
-##ignore this file##
-#.gitignore
-.project
-.settings
-.buildpath
-.idea/*
-deployment*
+node_modules
 .DS_Store
-_book/*
-node_modules/*
-static/*
-package-lock.json
-.vscode/
+.idea
+/sftp-config.json
+static
+.vscode
+
+/vendor/

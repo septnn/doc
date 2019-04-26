@@ -39,20 +39,6 @@ final class UrlEncoder
         '%7E' => '~',
     ];
 
-    protected static $dontDecode = [
-        ';',
-        '/',
-        '?',
-        ':',
-        '@',
-        '&',
-        '=',
-        '+',
-        '$',
-        ',',
-        '#',
-    ];
-
     /**
      * @param string $uri
      *
@@ -75,13 +61,15 @@ final class UrlEncoder
     private static function decode($uri)
     {
         return preg_replace_callback('/%([0-9a-f]{2})/iu', function ($matches) {
-            $char = chr(hexdec($matches[1]));
-
-            if (in_array($char, self::$dontDecode, true)) {
-                return strtoupper($matches[0]);
+            // Convert percent-encoded codes to uppercase
+            $upper = strtoupper($matches[0]);
+            // Keep excluded characters as-is
+            if (array_key_exists($upper, self::$dontEncode)) {
+                return $upper;
             }
 
-            return $char;
+            // Otherwise, return the character for this codepoint
+            return chr(hexdec($matches[1]));
         }, $uri);
     }
 

@@ -4,16 +4,16 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55
+class ComposerStaticInita80e15cfbc891cdbd87b049325ef67e4
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '6a47392539ca2329373e0d33e1dba053' => __DIR__ . '/..' . '/symfony/polyfill-intl-icu/bootstrap.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
@@ -69,8 +69,8 @@ class ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Webuni\\FrontMatter\\' => 
         array (
@@ -724,10 +724,10 @@ class ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2be3fb0986d73ec506821e8b6c5fec55::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita80e15cfbc891cdbd87b049325ef67e4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita80e15cfbc891cdbd87b049325ef67e4::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita80e15cfbc891cdbd87b049325ef67e4::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInita80e15cfbc891cdbd87b049325ef67e4::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -126,7 +126,7 @@ class Server
         }
 
         // Text search would be too slow on live server
-        $params['html']['search'] = true;
+        $params['html']['search'] = false;
 
         return $params;
     }

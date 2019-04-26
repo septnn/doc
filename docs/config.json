@@ -1,0 +1,34 @@
+{
+    "title": "Septnn Doc",
+    "tagline": "I am Septnn",
+    "author": "I, Me & Septnn",
+    "image": "docs/logo.png",
+    "ignore": {
+            "files": ["Work_In_Progress.md"],
+            "folders": ["99_Not_Ready"]
+    },
+    "live": {
+        "clean_urls": true
+    },
+    "html": {
+        "theme": "daux-github",
+        "breadcrumbs": true,
+        "breadcrumb_separator": "Chevrons",
+        "toggle_code": false,
+        "date_modified": true,
+        "float": false,
+        "inherit_index": true,
+
+        "repo": false,
+        "edit_on_github": "https://github.com/sepntt/SeptnnDoc/tree/master/docs",
+        "twitter": [],
+        "google_analytics": "",
+        "links": {
+            "Download": "https://github.com/sepntt/SeptnnDoc/archive/master.zip",
+            "GitHub Repo": "https://github.com/sepntt/SeptnnDoc",
+            "Help/Support/Bugs": "https://github.com/sepntt/SeptnnDoc/issues"
+        },
+
+        "powered_by": "Powered by Septnn"
+    }
+}

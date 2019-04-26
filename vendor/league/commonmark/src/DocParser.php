@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Node\NodeWalker;
 
 class DocParser
 {
@@ -94,7 +95,7 @@ class DocParser
             $tip->finalize($context, $lineCount);
         }
 
-        $this->processInlines($context);
+        $this->processInlines($context, $context->getDocument()->walker());
 
         $this->processDocument($context);
 
@@ -147,10 +148,8 @@ class DocParser
         }
     }
 
-    private function processInlines(ContextInterface $context)
+    private function processInlines(ContextInterface $context, NodeWalker $walker)
     {
-        $walker = $context->getDocument()->walker();
-
         while ($event = $walker->next()) {
             if (!$event->isEntering()) {
                 continue;

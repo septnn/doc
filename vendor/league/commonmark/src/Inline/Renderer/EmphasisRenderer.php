@@ -36,7 +36,7 @@ class EmphasisRenderer implements InlineRendererInterface
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->children()));
