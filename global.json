@@ -5,7 +5,7 @@
     "title": "Septnn Doc",
     "tagline": "I am Septnn",
     "author": "I, Me & Septnn",
-    "image": "docs/logo.png",
+    "image": "logo.png",
     "languages": {"en": "English", "zh": "简体中文"},
 
     "cache": false,

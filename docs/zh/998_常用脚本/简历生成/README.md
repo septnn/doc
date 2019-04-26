@@ -2,7 +2,7 @@
 
 ## 描述
 
-- [我的简历](/1_简历/简历.md)
+- [我的简历](/zh/1_简历/简历.md)
 - todo list
     - [x] 个人简历，markdown格式
     - [x] 生成html脚本，调用[github-api](https://developer.github.com/v3/markdown/)

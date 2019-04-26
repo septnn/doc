@@ -2,7 +2,7 @@
     "title": "Septnn Doc",
     "tagline": "I am Septnn",
     "author": "I, Me & Septnn",
-    "image": "docs/logo.png",
+    "image": "logo.png",
     "ignore": {
             "files": ["Work_In_Progress.md"],
             "folders": ["99_Not_Ready"]
