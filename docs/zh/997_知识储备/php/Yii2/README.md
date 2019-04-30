@@ -1,94 +1,54 @@
-# YII2框架
-
-## 说明
+# 绝味框架
 
 > 框架继承[YIIFRAMEWORK](https://www.yiiframework.com/doc/guide/2.0/en/start-workflow)
 
-## 当前框架vendor包列表 `TO DO`
+## 开始
 
+1. Clone  
 ```sh
-# 快速格式化 markdown 
-# 示例：bin/markdown README.md > README.html
-cebe/markdown                  1.2.1   A super fast, highly extensible markdown parser for PHP
-# 
-doctrine/lexer                 v1.0.1  Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.
-egulias/email-validator        2.1.7   A library for validating emails against several RFCs
-ezyang/htmlpurifier            v4.10.0 Standards compliant HTML filter written in PHP
-swiftmailer/swiftmailer        v6.2.0  Swiftmailer, free feature-rich PHP mailer
-symfony/polyfill-iconv         v1.11.0 Symfony polyfill for the Iconv extension
-symfony/polyfill-intl-idn      v1.11.0 Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions
-symfony/polyfill-mbstring      v1.11.0 Symfony polyfill for the Mbstring extension
-symfony/polyfill-php72         v1.11.0 Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions
-yidas/yii2-composer-bower-skip 2.0.13  A Composer package that allows you to install or update Yii2 without Bower-Asset
-yiisoft/yii2                   2.0.17  Yii PHP Framework Version 2
-yiisoft/yii2-composer          2.0.7   The composer plugin for Yii extension installer
-yiisoft/yii2-swiftmailer       2.1.0   The SwiftMailer integration for the Yii framework
-
+git clone http://xxxx@git.xxx.com/scm/mpos/yii2_base.git
 ```
-
-## 使用说明
-
-### 克隆框架
-
-> 可以放到任意位置，如果是开发机，不需要克隆
-
+2. 新建项目  
 ```sh
-git clone http://git.juewei.com/projects/MPOS/repos/yii2_base/browse
+mkdir /home/xxx/newapp
+cp -a yii2_base/demo/* /home/xxx/newapp/
+cd /home/xxx/newapp/
 ```
-
-### 克隆项目DEMO
-
-> 可以放到任意位置
-
-```sh
-git clone http://git.juewei.com/projects/MPOS/repos/yii2_base/browse/demo app
-```
-
-### 修改项目配置文件
-
-- 修改框架配置参数`vi index.php`
-
+3. 修改项目配置文件   
+修改vendor地址 ,修改项目id，`vi /home/xxx/newapp/config/app.php`
 ```php
-defined('YII_FRAME') or define('YII_FRAME', '/home/dawei/www/frame');
+defined('YII_FRAME') or define('YII_FRAME', '/home/dawei/www/frame/');
+defined('APP_ID') or define('APP_ID', 'TOS_API'); // 项目id，不同项目配置一次即可
 ```
-
-### 配置nginx
-
+4. 验证框架地址是否正确  
+```sh
+#执行yii命令
+chmod 755 yii
+./yii
+```
+5. 配置nginx  
 ```nginx
+# 关键nginx配置，其它忽略
 server {
-    listen 31011;
-
-    server_name frame.dev.juewei.com;
-    root        /home/dawei/www/frame/web;
-    index       index.php;
-
-    access_log  /home/dawei/nginx/logs/frame.juewei.com.access.log;
-    error_log   /home/dawei/nginx/logs/frame.juewei.com.error.log;
-
+    ......
+    root        /home/dawei/www/frame/demo/web;
+    ......
     location / {
         # Redirect everything that isn't a real file to index.php
         try_files $uri $uri/ /index.php$is_args$args;
     }
-
-    location ~ \.php$ {
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_pass 127.0.0.1:9000;
-        #fastcgi_pass unix:/var/run/php5-fpm.sock;
-        try_files $uri =404;
-    }
-
-    location ~* /\. {
-        deny all;
-    }
+    ......
 }
 ```
+6. 访问 http://127.0.0.1/well-come/index
+7. 示例  
+一些示例代码在 `demo\controllers\WellComeController.php` 里面
 
 
 
-### 快速手册
+## 快速手册
 
-#### 项目目录说明
+## 项目目录说明
 
 - config                    配置文件
   - dev                     开发机配置文件夹
@@ -105,3 +65,9 @@ server {
 - views                     模板层
 - web                       web入口
 - yii                       脚本入口 
+
+
+# Q & A
+
+> None of the master DB servers is available
+- 当主从数据库配置错误时，yii会把错误的配置信息，缓存10分钟，10分钟内不会读取错误配置。可以通过清除`runtime/cache/*`目录下文件。

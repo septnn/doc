@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 发送周报邮件脚本，定时每天下午发送邮件
+ */
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
@@ -37,7 +39,7 @@ $application->add(new class() extends Command{
         if(empty($path)) {
             return '路径不对';
         }
-        $attachPath = '';
+        $attachPath = $path;
         $filename = '工作周报'.date('ymd');
         $attach = $attachPath . $filename . '.xls';
 
@@ -57,11 +59,11 @@ $application->add(new class() extends Command{
             $str = '&nbsp;&nbsp;&nbsp;&nbsp;《'.$attach.'》的周报还没写呢，赶紧写吧！';
         } else {
             $to = true;
-            $str = "@all<br />&nbsp;&nbsp;&nbsp;&nbsp;本周周报详见附件，有问题请随时沟通。";
+            $str = "@all<br />&nbsp;&nbsp;&nbsp;&nbsp;本周周报详见附件，有问题请随时沟通。<br /> （备注：确认邮件内容，然后删除此行，发送周报）";
             $message->attach(Swift_Attachment::fromPath($attach));
         }
         $message->setTo($this->getTo($to));
-        $message->setCc($this->getTo($to));
+        $message->setCc($this->getCc($to));
         $message->setBody($this->body($str), 'text/html');
         // Send the message
         $result = $mailer->send($message);
@@ -74,15 +76,15 @@ $application->add(new class() extends Command{
         if($s === false) {
             return ['dawei@juewei.com'];
         }
-        // return ['tech@juewei.com','lianzeng.shi@juewei.cn','fuyu@juewei.com','lujikai@juewei.com','zhuyangchun@juewei.com','zhangying@juewei.com'];
+        return ['dawei@juewei.com'];
     }
 
     public function getCc($s = false)
     {
         if($s === false) {
-            return ['dawei@juewei.com'];
+            return [];
         }
-        // return ['liyuhan@juewei.com','li.zeng@juewei.cn'];
+        return ['dawei@juewei.com'];
     }
 
     public function body($str = '')
