@@ -23,7 +23,8 @@
         "symfony/process": "^4.0",
         "webuni/commonmark-table-extension": "0.9.*",
         "webuni/front-matter": "^1.0.0",
-        "swiftmailer/swiftmailer" : "^6.2.1"
+        "swiftmailer/swiftmailer" : "^6.2.1",
+        "phpseclib/phpseclib": "^2.0"
 
     },
     "suggest":{
@@ -44,7 +45,7 @@
     "repositories": {
         "packagist": {
             "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
+            "url": "https://packagist.org"
         }
     }
 }
