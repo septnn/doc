@@ -1,4 +1,5 @@
 # IO多路复用模式-select-epoll-poll
+
 - select
     - 支持1024个文件描述符
     - 用户进程轮询监听socket

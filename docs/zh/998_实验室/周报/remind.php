@@ -41,10 +41,14 @@ $application->add(new class() extends Command{
             0 => '宋光',
             1 => '新华',
             2 => '杨洋'];
-        $date = date('d');
-        // $date = ;
+        $time = time();
+        // $time = time()+86400*4;
+        $date = date('d', $time);
         $value = $date%5;
         $name = $pepole[$value];
+        $date2 = date('d' , $time+86400);
+        $value2 = $date2%5;
+        $name2 = $pepole[$value2];
         // Create the Transport
         // $transport = (new Swift_SmtpTransport('smtpdm.aliyun.com', 80))
         $transport = (new Swift_SmtpTransport('smtp.juewei.com', 80))
@@ -55,10 +59,10 @@ $application->add(new class() extends Command{
         $mailer = new Swift_Mailer($transport);
 
         // Create a message
-        $message = (new Swift_Message('对账脚本提醒'))
+        $message = (new Swift_Message('对账脚本提醒')) 
         ->setFrom(['dawei@juewei.com']);
-        $str = '&nbsp;&nbsp;&nbsp;&nbsp;《'.$name.'》今天跑对账脚本';
-        $message->setTo($this->getTo());
+        $str = '&nbsp;&nbsp;&nbsp;&nbsp;'.date('Y-m-d', $time).'《'.$name.'》今天跑对账脚本，《'.$name2.'》明天跑对账脚本';
+        $message->setTo($this->getTo(true));
         $message->setCc($this->getCc());
         $message->setBody($this->body($str), 'text/html');
         // Send the message
@@ -70,7 +74,7 @@ $application->add(new class() extends Command{
     public function getTo($s = false)
     {
         if($s === false) {
-            return ['dawei@juewei.com','wuxinhua@juewei.com'];
+            return ['dawei@juewei.com'];
         }
         return ['dawei@juewei.com','wuxinhua@juewei.com','yangyang@juewei.com','songguang@juewei.com','liyang@juewei.com'];
     }
