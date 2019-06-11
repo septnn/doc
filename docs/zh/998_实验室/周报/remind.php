@@ -33,22 +33,20 @@ $application->add(new class() extends Command{
     }
     public function send($password = '')
     {
-
         // 取模
-        $pepole = [
-            3 => '李洋',
-            4 => '达威',
-            0 => '宋光',
-            1 => '新华',
-            2 => '杨洋'];
-        $time = time();
-        // $time = time()+86400*4;
-        $date = date('d', $time);
-        $value = $date%5;
-        $name = $pepole[$value];
-        $date2 = date('d' , $time+86400);
-        $value2 = $date2%5;
-        $name2 = $pepole[$value2];
+        $pepole = ['李洋','达威','宋光','新华','杨洋'];
+        $count = count($pepole);
+
+        $str = '<br />';
+        $now = time();
+        for ($i=0; $i < 5; $i++) {
+            $time = $now + $i * 86400;
+            $str .= '日期：'.date('Y-m-d', $time).'&nbsp;&nbsp;&nbsp;&nbsp;';
+            $date = date('z')+$i;
+            $value = $date%$count;
+            $name = $pepole[$value];
+            $str .= '《'.$name.'》跑对账脚本。 <br />';
+        }
         // Create the Transport
         // $transport = (new Swift_SmtpTransport('smtpdm.aliyun.com', 80))
         $transport = (new Swift_SmtpTransport('smtp.juewei.com', 80))
@@ -61,7 +59,7 @@ $application->add(new class() extends Command{
         // Create a message
         $message = (new Swift_Message('对账脚本提醒')) 
         ->setFrom(['dawei@juewei.com']);
-        $str = '&nbsp;&nbsp;&nbsp;&nbsp;'.date('Y-m-d', $time).'《'.$name.'》今天跑对账脚本，《'.$name2.'》明天跑对账脚本';
+        // $str = '&nbsp;&nbsp;&nbsp;&nbsp;'.date('Y-m-d').'《'.$name.'》今天跑对账脚本，《'.$name2.'》明天跑对账脚本，《'.$name3.'》后天跑对账脚本。';
         $message->setTo($this->getTo(true));
         $message->setCc($this->getCc());
         $message->setBody($this->body($str), 'text/html');
