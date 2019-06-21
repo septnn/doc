@@ -7,7 +7,7 @@
 1. **克隆**
 
 ```sh 
-git clone https://github.com/sepntt/SeptnnDoc.git
+git clone https://github.com/sepntt/doc.git
 ```
 
 2. **Composer**
