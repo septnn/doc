@@ -17,6 +17,18 @@ $application = new Application();
 $application->add(new class() extends Command{
     protected static $defaultName = 'remind';
 
+    public $mails = [
+        '李洋' => 'liyang@juewei.com',
+        '达威' => 'dawei@juewei.com',
+        '宋光' => 'songguang@juewei.com',
+        '新华' => 'wuxinhua@juewei.com',
+        '王超' => 'wangchao@juewei.com',
+    ];
+
+    public $cc = [
+        '杨洋' => 'yangyang@juewei.com',
+    ];
+
     protected function configure()
     {
         $this
@@ -34,19 +46,25 @@ $application->add(new class() extends Command{
     public function send($password = '')
     {
         // 取模
-        $pepole = ['李洋','达威','宋光','新华','杨洋'];
+        $pepole = array_keys($this->mails);
         $count = count($pepole);
 
         $str = '<br />';
         $now = time();
-        for ($i=0; $i < 5; $i++) {
-            $time = $now + $i * 86400;
-            $str .= '日期：'.date('Y-m-d', $time).'&nbsp;&nbsp;&nbsp;&nbsp;';
-            $date = date('z')+$i;
-            $value = $date%$count;
-            $name = $pepole[$value];
-            $str .= '《'.$name.'》跑对账脚本。 <br />';
+        $limit = 2;
+        $d = 0;
+        for ($j=0; $j < $limit; $j++) {
+            for ($i=0; $i < 5; $i++) {
+                $time = $now + $d * 86400;
+                $str .= '日期：'.date('Y-m-d', $time).'&nbsp;&nbsp;&nbsp;&nbsp;';
+                $date = date('z')+$d;
+                $value = $date%$count;
+                $name = $pepole[$value];
+                $str .= '《'.$name.'》跑对账脚本。 <br />';
+                $d++;
+            }
         }
+        
         // Create the Transport
         // $transport = (new Swift_SmtpTransport('smtpdm.aliyun.com', 80))
         $transport = (new Swift_SmtpTransport('smtp.juewei.com', 80))
@@ -61,7 +79,7 @@ $application->add(new class() extends Command{
         ->setFrom(['dawei@juewei.com']);
         // $str = '&nbsp;&nbsp;&nbsp;&nbsp;'.date('Y-m-d').'《'.$name.'》今天跑对账脚本，《'.$name2.'》明天跑对账脚本，《'.$name3.'》后天跑对账脚本。';
         $message->setTo($this->getTo(true));
-        $message->setCc($this->getCc());
+        $message->setCc($this->getCc(true));
         $message->setBody($this->body($str), 'text/html');
         // Send the message
         $result = $mailer->send($message);
@@ -74,7 +92,7 @@ $application->add(new class() extends Command{
         if($s === false) {
             return ['dawei@juewei.com'];
         }
-        return ['dawei@juewei.com','wuxinhua@juewei.com','yangyang@juewei.com','songguang@juewei.com','liyang@juewei.com'];
+        return array_values($this->mails);
     }
 
     public function getCc($s = false)
@@ -82,7 +100,7 @@ $application->add(new class() extends Command{
         if($s === false) {
             return [];
         }
-        return ['dawei@juewei.com'];
+        return array_values($this->cc);
     }
 
     public function body($str = '')
