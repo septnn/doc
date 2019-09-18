@@ -19,6 +19,9 @@ $application->add(new class() extends Command
     public $mails = [
         '达威' => 'dawei@juewei.com',
         '李洋' => 'liyang@juewei.com',
+        '1' => 'guomeiling@juewei.com',
+        '2' => 'dingliang@juewei.com',
+        '3' => 'wangzenghui@juewei.com',
     ];
 
     public $cc = [
@@ -35,41 +38,52 @@ $application->add(new class() extends Command
 
     function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln($this->send($input->getArgument('password')));
-    }
-    function send($password = '')
-    {
-        try {
-            $url = 'https://test-cdn-wap.juewei.com/m/shop/static/css/goodslist.c9a2d089ddd79fc24120d94bf8f2a40d.css';
-            $code = 200;
-            $c = curl_init();
-            curl_setopt($c, CURLOPT_URL, $url);
-            curl_setopt($c, CURLOPT_TIMEOUT, 200);
-            curl_setopt($c, CURLOPT_HEADER, false);
-            curl_setopt($c, CURLOPT_NOBODY, true);
-            curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($c, CURLOPT_FOLLOWLOCATION, false);
-            curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
-            $res = curl_exec($c);
-            var_dump($res);
-            $error = curl_error($c);
-            $code = curl_getinfo($c, CURLINFO_HTTP_CODE);
-            curl_close($c);
-        } catch (\Throwable $th) {
-            echo "Throwable" . PHP_EOL;
-            $code = 100;
-            var_dump($th->getMessage());
-        }
+        $urls = [
+            'https://test-cdn-wap.juewei.com/m/shop/static/css/goodslist.c9a2d089ddd79fc24120d94bf8f2a40d.css?debug=1',
+            'https://test-wap.juewei.com/api/juewei-api/order/list?debug=1',
+            'https://dev.juewei.com/api/juewei-api/alimini/loginByAliUid?debug=1',
+        ];
+        $str = '';
+        $send = false;
+        foreach ($urls as $key => $value) {
+            try {
+                $url = $value;
+                $code = 200;
+                $c = curl_init();
+                curl_setopt($c, CURLOPT_URL, $url);
+                curl_setopt($c, CURLOPT_TIMEOUT, 10);
+                curl_setopt($c, CURLOPT_HEADER, false);
+                curl_setopt($c, CURLOPT_NOBODY, true);
+                curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($c, CURLOPT_FOLLOWLOCATION, false);
+                curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'GET');
+                curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
+                $res = curl_exec($c);
+                $error = curl_error($c);
+                $code = curl_getinfo($c, CURLINFO_HTTP_CODE);
+                curl_close($c);
+            } catch (\Throwable $th) {
+                echo "Throwable" . PHP_EOL;
+                $code = 'x';
+                $error = $th->getMessage();
+            }
+            if ($code != 200) { // 只要有一个code不是200，就发送邮件
+                $send = true;
+            }
 
-        if ($code == 200) {
+            $str .= "URL:[ $url ]" . "<br/ >";
+            $str .= "HTTP CODE: [ $code ]" . "<br/ >";
+            $str .= "ERROR: [ $error ]" . "<br/ >";
+        }
+        if ($send === false) { // 不发送
             return false;
         }
+        $output->writeln($this->send($str, $input->getArgument('password')));
+    }
+    function send($str, $password = '')
+    {
 
-        $str = "URL:[ $url ]" . "<br/ >";
-        $str .= "HTTP CODE: [ $code ]" . "<br/ >";
-        $str .= "ERROR: [ $error ]" . "<br/ >";
         $transport = (new Swift_SmtpTransport('smtp.juewei.com', 80))
             ->setUsername('dawei@juewei.com')
             ->setPassword($password)
@@ -78,7 +92,7 @@ $application->add(new class() extends Command
         $mailer = new Swift_Mailer($transport);
 
         // Create a message
-        $message = (new Swift_Message('url 监控 HTTP CODE ' . $code))
+        $message = (new Swift_Message('url 监控'))
             ->setFrom(['dawei@juewei.com']);
         $message->setTo($this->getTo(true));
         $message->setCc($this->getCc(true));
