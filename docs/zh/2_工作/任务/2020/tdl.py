@@ -25,7 +25,12 @@ class mainFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id=-1, title=APP_TITLE)
         # 获得右下坐标
-        workarea = win32api.GetMonitorInfo(1)['Work']
+        #workarea = win32api.GetMonitorInfo(1)['Work']
+        for monitor in win32api.EnumDisplayMonitors():
+            monitor_info = win32api.GetMonitorInfo(monitor[0])
+            if monitor_info['Flags'] == 1:
+                break
+        workarea = monitor_info['Work']
         pos=(workarea[2]-280,workarea[3]-180)
         # 设置背景颜色
         self.SetBackgroundColour(wx.Colour(224, 224, 224))
@@ -66,7 +71,7 @@ class mainFrame(wx.Frame):
         # 创建定时器 
         self.timer = wx.Timer(self)#创建定时器 
         self.Bind(wx.EVT_TIMER, self.OnTimer, self.timer)#绑定一个定时器事件 
-        todo = 2 * 60 * 1000
+        todo = 2 * 3600 * 1000
         # todo = 5000
         self.timer.Start(todo)#设定时间间隔为1000毫秒,并启动定时器
         
