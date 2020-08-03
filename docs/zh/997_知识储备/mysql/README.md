@@ -88,7 +88,7 @@
 
  - ON DUPLICATE KEY UPDATE，并且插入行后会导致在一个UNIQUE索引或PRIMARY KEY中出现重复值，则执行旧行UPDATE
  - 隔离级别：mysql/四个隔离级别
-     - sql查询状态，性能优化/show processlist详解
+ - sql查询状态，性能优化/show processlist详解
      - sleep 线程正在等待客户端发送新请求
      - query 线程正在执行查询或者正在将结果发送给客户端
      - locked 线程等待表锁，
@@ -98,7 +98,8 @@
      - sending data 线程在多个状态之间传送数据、线程生成结果集、线程向客户端发送数据
  - show index from 查看索引基数
  - 当客户端从服务器获取数据的时候，实际上是服务器不断给客户端推送数据
- - mysql_query php把结果集全部缓存到内存中，适合慢多，pdo默认。mysql_unbuffered_query php不会缓存，节省内存，但    - close慢，适合快少，pdo参数mysql_use_result=1。
+ - mysql_query php把结果集全部缓存到内存中，适合慢多，pdo默认。mysql_unbuffered_query php不会缓存，节省内存，但    
+ - close慢，适合快少，pdo参数mysql_use_result=1。
  - 主从，读写分离
      - sync_binlog=500 每次提交事物前，讲二进制日志同步到磁盘上。配置在主库。
      - innodb_flush_logs_at_trx_commit=2 每秒执行一次 flush(刷到磁盘)操作

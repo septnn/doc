@@ -1,5 +1,7 @@
 #
 
+`https://www.cnblogs.com/struggle-1216/p/12021779.html`
+
 - 反向代理
 - IO多路复用模型，事件驱动驱动多种模型
     - epoll 内核大于2.6默认

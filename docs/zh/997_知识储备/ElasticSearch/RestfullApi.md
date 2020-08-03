@@ -1,5 +1,109 @@
-# 快捷接口
+# 增删改查
 
+## 增
+
+```
+POST user_info/_doc
+{
+    "user_id": "123"
+}
+```
+
+## 改
+
+```
+# 直接修改
+POST user_info/_doc/dTRM4moBLJ867DwTWabX/_update
+{
+  "doc" : {
+    "tag_id": [4,5,6]
+  }
+}
+# 数组追加
+POST user_info/_doc/dTRM4moBLJ867DwTWabX/_update
+{
+  "script": {
+    "source": "ctx._source.tag_id.add(params.tag)",
+    "lang": "painless",
+    "params": {
+      "tag": 7
+    }
+  }
+}
+# 删除一个数组元素，按照数组的key删除
+POST user_info/_doc/RzRZ4moBLJ867DwTn66e/_update
+{
+  "script" : {
+        "source": "ctx._source.tag_id.remove(params.tag)",
+        "lang": "painless",
+        "params" : {
+            "tag" : 3
+        }
+    }
+}
+# 删除一个数组元素，按照数组的value删除
+# 当数组内有重复数据的时候，ctx._source.tag_id.indexOf获取的key的方式是，先入先出
+POST user_info/_doc/RzRZ4moBLJ867DwTn66e/_update
+{
+  "script" : {
+        "source": "ctx._source.tag_id.remove(ctx._source.tag_id.indexOf(params.tag))",
+        "lang": "painless",
+        "params" : {
+            "tag" : 3
+        }
+    }
+}
+```
+
+# 一些mapping操作
+
+## 创建
+
+```
+PUT user_info
+{
+    "mappings": {
+        "_doc": {
+            "dynamic": "strict",  // 不可直接追加字段
+            "properties": {
+                "openid": {
+                    "type": "keyword"
+                }, 
+                "phone": {
+                    "type": "keyword"
+                }, 
+                "source": {
+                    "type": "long"
+                }, 
+                "unionid": {
+                    "type": "keyword"
+                }, 
+                "user_id": {
+                    "type": "keyword"
+                },
+                "wx_tag_id": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}
+```
+
+## 追加字段
+
+```
+PUT user_info/_doc/_mapping
+{
+  "properties": {
+    "tag_id": {
+      "type": "keyword" 
+    }
+  }
+}
+```
+
+# 快捷接口
 
 ## 快捷接口
 
