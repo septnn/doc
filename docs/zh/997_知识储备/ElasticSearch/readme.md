@@ -98,6 +98,7 @@
 - 优化字段用于部分匹配
 - 使用定制日期格式
 - 使用特定字段，例如`geo_point``geo_shape`，避免`dynamic mapping`
+- 枚举类型建议keyword
 
 `GET /kibana_sample_data_ecommerce/_mapping`
 
@@ -434,3 +435,9 @@ IP类型的字段可以用来存储IPv4或者IPv6地址
 ### properties
 
 ### muti_field 一个字段多个索引
+
+### _id
+
+### ignore_above
+
+超过 ignore_above 的字符串，analyzer 不会进行处理，

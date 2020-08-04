@@ -1,0 +1,16 @@
+= 订单数据
+
+[source, json]
+----
+{
+  "test_ssd_order" : {
+    "mappings" : {
+      "properties" : {
+        "source" : {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+----
