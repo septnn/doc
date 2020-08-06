@@ -4,6 +4,8 @@
 
 > 准实时搜索：`When a document is stored, it is indexed and fully searchable in near real-time--within 1 second.`  
 
+- 首先数据会被写入主分片所在机器的内存中，再触发flush操作，形成一个新的segment数据段，只有flush到磁盘的数据才会被异步拉取到其它副本节点，如果本次搜索命中副本节点且数据没有同步的话，那么是不会被检索到的；es默认flush间隔是1s，也可通过修改refresh_interval参数来调整间隔（为提升性能和体验，一版设置30s-60s）
+
 ### 索引
 
 > 默认，索引所有字段中的数据
@@ -25,6 +27,10 @@
 - Index 存储在多个分片中，其中每一个分片都是一个独立的 Lucene Index。这就应该能提醒你，添加新 index 应该有个限度：每个 Lucene Index 都需要消耗一些磁盘，内存和文件描述符。因此，一个大的 index 比多个小 index 效率更高：Lucene Index 的固定开销被摊分到更多文档上了
 
 > 版本7之前，不同type相同字段的数据存储使用一个lucene字段，存储仅有小部分字段相同或者全部字段都不相同的文档，会导致数据稀疏，影响Lucene有效压缩数据的能力。
+
+## segment 最小存储单元
+
+多个小segment可合为一个较大的segment，并但不能拆分
 
 ## shards 分片
 
@@ -88,6 +94,12 @@
 - Hot & Warm Node：不同硬件配置的 Data Node，用来实现冷热数据节点架构，降低运维部署的成本
 - Machine Learning Node：负责机器学习的节点
 - Tribe Node：负责连接不同的集群。支持跨集群搜索 Cross Cluster Search
+
+### 分布式
+
+es天生支持分布式，配置与使用上与单机版基本没什么区别，可快速扩张至上千台集群规模、支持PB级数据检索；通过内部路由算法将数据储存到不同节点的分片上；当用户发起一次查询时，首先会在各个分片上完成提前批处理，处理后的数据汇总到请求节点再做一次全局处理后返回。
+
+
 
 ## mapping
 
@@ -440,4 +452,12 @@ IP类型的字段可以用来存储IPv4或者IPv6地址
 
 ### ignore_above
 
+- (int) 字符串长度
+
 超过 ignore_above 的字符串，analyzer 不会进行处理，
+
+### index
+
+- analyzer 分词
+- no_analyzer 不分词直接索引
+- no 不索引
