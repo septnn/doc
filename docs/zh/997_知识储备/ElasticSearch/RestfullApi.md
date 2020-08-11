@@ -179,3 +179,8 @@ curl -X POST http://172.30.0.97:9200/test3/_forcemerge?max_num_segments=1
 ```sh
 curl -X POST http://172.30.0.97:9200/test3/_forcemerge?only_expunge_deletes=true 
 ```
+
+## 批量操作
+
+> 建议1000-5000doc。总大小5M-15M。
+
