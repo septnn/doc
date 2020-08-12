@@ -513,7 +513,7 @@ IP类型的字段可以用来存储IPv4或者IPv6地址
 
 - (int) 字符串长度
 
-超过 ignore_above 的字符串，analyzer 不会进行处理，
+超过 ignore_above 字符长度的字符串，analyzer 不会进行处理，
 
 ### index
 

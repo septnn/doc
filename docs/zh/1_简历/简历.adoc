@@ -1,6 +1,6 @@
 = 达威
-dawei <septnn@163.com>
-v2.0, 2020-8-7
+Wei Da <septnn@163.com>
+v2.0
 
 
 NOTE: `*资深PHP工程师*` | 男 | 9 年工作经验 | 31岁 | 13001979905
