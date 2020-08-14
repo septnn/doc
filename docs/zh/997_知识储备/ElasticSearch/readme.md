@@ -34,7 +34,9 @@
 
 ## segment 最小存储单元
 
-多个小segment可合为一个较大的segment，并但不能拆分
+一个segment是一个完备的lucene倒排索引。
+
+- 多个小segment可合为一个较大的segment，并但不能拆分
 
 ## shards 分片
 

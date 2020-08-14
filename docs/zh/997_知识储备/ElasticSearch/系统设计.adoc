@@ -18,5 +18,13 @@ query 提供 profile:true，开启query分析。
 
 把query差分成为底层lucene请求。
 
-==
+== 内存
 
+. jvm.options主要是进行内存相关配置，官方建议分配给es的内存不要超出系统内存的50%，预留一半给Lucene，因为Lucene会缓存segment数据提升检索性能；内存配置不要超过32g，如果你的服务器内存没有远远超过64g，那么不建议将es的jvm内存设置为32g，因为超过32g后每个jvm对象指针的长度会翻倍，导致内存与cpu的开销增大
+.
+
+== 集群
+
+. 独立的master节点，不存储数据, 数量不少于2
+. 数据节点(Data Node)
+. 查询节点(Query Node)，起到负载均衡的作用
