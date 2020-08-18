@@ -16,3 +16,15 @@
 - 多线程
     - 线程实例继承thread，实现线程run方法
     - 
+
+## 安全
+
+### save_mode 安全模式
+
+php.ini safe_mode 有很多函数首档影响，例如执行权限，执行系统函数等
+
+利用safe_mode_exec_dir加载可执行文件
+利用safe_mode_include_dir包含可包含文件
+利用safe_mode_allowed_env_vars添加可是用环境变量
+
+### expose_php 
