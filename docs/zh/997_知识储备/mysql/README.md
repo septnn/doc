@@ -12,8 +12,10 @@
     - mediumint 3字节=24位 2^24
     - int 4字节=32位 2^32
     - bigint 8字节=64位 2^64
-- char固定字节，空右填充空格
-- varchar可变n+1|2字节，1|2存长度，1字节存长度为255字节，超过存2字节
+- char char(10) 存储10字节
+    - 固定字节，空右填充空格（无法区分手动填入）
+- varchar varchar(10) 可变10字节长度
+    - 额外1字节存长度，如果长度超过255字节，2字节存储长度
 - 二进制存储字符串，大小写敏感，直接比较字节，比字符串查询快
 - blob text 排序按照max_sort_length长度的前缀排序
 - enum 存的整型，排序按照整型，可以用field函数显示排序
@@ -23,8 +25,6 @@
 ## 优化
 
 ### 表结构优化
-
-#### 字段合理
 
 原则：单表越小越好，字段合理利用，占用更少的磁盘，内存，cpu缓存，cpu处理周期短
 
@@ -36,53 +36,54 @@
 - 合理利用范式
 - 减少大字段，合理合并大字段，压缩大字段(compress函数，不建议用)，大字段占用大空间，可能走不上索引
 
-### 优化
+### 查询过程
 
  - 查询过程：
-     - 客户端->通讯协议->服务器->mysql服务器->查询缓存->解析器->解析数->与处理器->解析数->查询优化器->查询执行计划->查询执行引擎->API->存储引擎->数据->返回
- - 核心：在一定负载下降低响应时间
- - 计数器，单表多条，随机更新一条，避免互斥锁，取sum
- - 业务上，精确数据查询，减少查询数据量，精确列查询。减少io内存cpu的消耗
- - 衡量查询开销的三个基本值
-     -  响应时间
-         - 服务时间
-         - 排队时间
- - 扫描行数
- - 返回行数
- - 索引优化：性能优化/索引优化
- - 查看sql查询成本，性能优化/sql查询成本 ，没啥大用
- - mysql连接和断开连接都很轻量
- - 减少联合查询
-     - 业务可以增加缓存
-     - 减少锁竞争
-     - 高性能可扩展
-     - 关联字段
-         - 长度一致、编码一致
- - on using子句中的列有索引，在关联顺序中的第二个表的相应列创建索引
- - groupby orderby 在一个表，mysql可能会用到索引
- - limit慢
-     - 可以使用内联innerjoin 例:select id,name from t inner join (select id from t order by id desc limit 100,10) as l using id
-     - 利用between代替 例:select id,name from t where between 100 and 110 order by id desc 
-     - 利用id> 例:select id,name from t where id > 100 order by id desc limit 10
- - 利用show profile分析sql语句，并优化
- - 分表，高并发，大数据量，可以用merge存储引擎分表，也可以手动分表
- - 分区，大数据量，sql create创建分区，分区不是越多越好，根据机器性能评估，最好200以内
- - 全文索引
-     - 5.7.6 支持中文，ngram插件
-         - 自然语言模式  in natural language mode
-             - select * from t where match(name) against ('你好' in natural language mode)
-         - 布尔模式 in boolean mode
-             - select * from t where match(name) against ('你好' in boolean mode)
- - 减少使用mysql自带函数，now date相关函数，可能会导致不走查询缓存
- - 配置优化
-     - key_buffer_size 索引缓存大小 myisam 内存的 30-40%
-     - innodb_buffer_pool_size 70-80% 的可用内存，越大吞吐量(单位： tps)就越高
-     - table_open_cache 表高速缓存的大小 
-     - thread_cache_size 线程缓存数
-     - query_cache_size 查询缓存
-     - read_buffer_size 读入缓冲区大小
-     - read_rnd_buffer_size 随机读缓冲区大小
-     - sort_buffer_size 排序缓存大小 不过多小的排序都分全部设置内存
+     - 客户端->通讯协议->服务器->mysql服务器->连接/线程处理->查询缓存->解析器->解析树->预处理器->解析树->查询优化器->查询执行计划->查询执行引擎->API->存储引擎->数据->返回
+
+### 整体优化
+
+> 原则：在一定负载下降低响应时间
+ 
+- 计数器，单表多条，随机更新一条，避免互斥锁，取sum
+- 业务上，精确数据查询，减少查询数据量，精确列查询。减少io内存cpu的消耗
+- 衡量查询开销的三个基本值：响应时间、服务时间、排队时间
+- 扫描行数
+- 返回行数
+- 索引优化：性能优化/索引优化
+- 查看sql查询成本，性能优化/sql查询成本 ，没啥大用
+- mysql连接和断开连接都很轻量
+- 减少联合查询
+ - 业务可以增加缓存
+ - 减少锁竞争
+ - 高性能可扩展
+ - 关联字段
+     - 长度一致、编码一致
+- on using子句中的列有索引，在关联顺序中的第二个表的相应列创建索引
+- groupby orderby 在一个表，mysql可能会用到索引
+- limit慢
+ - 可以使用内联innerjoin 例:select id,name from t inner join (select id from t order by id desc limit 100,10) as l using id
+ - 利用between代替 例:select id,name from t where between 100 and 110 order by id desc 
+ - 利用id> 例:select id,name from t where id > 100 order by id desc limit 10
+- 利用show profile分析sql语句，并优化
+- 分表，高并发，大数据量，可以用merge存储引擎分表，也可以手动分表
+- 分区，大数据量，sql create创建分区，分区不是越多越好，根据机器性能评估，最好200以内
+- 全文索引
+ - 5.7.6 支持中文，ngram插件
+     - 自然语言模式  in natural language mode
+         - select * from t where match(name) against ('你好' in natural language mode)
+     - 布尔模式 in boolean mode
+         - select * from t where match(name) against ('你好' in boolean mode)
+- 减少使用mysql自带函数，now date相关函数，可能会导致不走查询缓存
+- 配置优化
+ - key_buffer_size 索引缓存大小 myisam 内存的 30-40%
+ - innodb_buffer_pool_size 70-80% 的可用内存，越大吞吐量(单位： tps)就越高
+ - table_open_cache 表高速缓存的大小 
+ - thread_cache_size 线程缓存数
+ - query_cache_size 查询缓存
+ - read_buffer_size 读入缓冲区大小
+ - read_rnd_buffer_size 随机读缓冲区大小
+ - sort_buffer_size 排序缓存大小 不过多小的排序都分全部设置内存
 
 ### 问题排查
 
